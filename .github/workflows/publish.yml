@@ -16,7 +16,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   TAG_NAME: >-
     ${{
-      github.event_name == 'release' && github.event.release && github.event.release.tag_name : github.sha
+      github.event_name == 'release' && github.event.release && github.event.release.tag_name || github.sha
     }}
 
 jobs:
