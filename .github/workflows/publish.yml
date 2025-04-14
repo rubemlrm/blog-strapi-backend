@@ -34,6 +34,7 @@ jobs:
           tags: |
             type=raw,value=latest
             type=raw,value=cache
+            type=raw,value=${{ github.sha }}
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
@@ -43,7 +44,6 @@ jobs:
           target: runtime
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:cache
           cache-to: type=inline
       - name: Generate artifact attestation
