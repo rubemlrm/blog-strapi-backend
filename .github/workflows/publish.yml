@@ -45,6 +45,8 @@ jobs:
             type=raw,value=latest
             type=raw,value=cache
             type=raw,value=${{ env.TAG_NAME }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
@@ -52,7 +54,7 @@ jobs:
           context: .
           push: true
           target: runtime
-          platforms: linux/arm64
+          platforms: linux/arm64/v8
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:cache
